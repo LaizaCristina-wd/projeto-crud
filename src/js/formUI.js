@@ -1,0 +1,13 @@
+export function showEditForm(user){
+  const form = document.querySelector("#edit-user-card");
+
+  form.querySelector("#edit-name").value = user.name;
+  form.querySelector("#edit-age").value = user.age;
+  form.querySelector("#edit-email").value = user.email;
+
+  form.style.display = "block";
+}
+
+export function hideEditForm(){
+  document.querySelector("#edit-user-card").style.display = "none";
+} //esconder o formulário de edição
