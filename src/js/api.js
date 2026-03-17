@@ -1,9 +1,17 @@
 import { API_URL } from "./config.js";
 
  export async function getUsers(){
-  const response = await fetch(`${API_URL}/users`);
-  return response.json();
+  try {
+    const response = await fetch(`${API_URL}/users`);
+    const data = await response.json();
+    console.log(data);
+    return data;
+}  
+  catch(error){
+    console.error("User not found", error);
+  }
 }
+
 
 export async function createUser(data){
 
@@ -23,8 +31,12 @@ export async function updateUser(id, data){
   });
 }
 export async function deleteUser(id){
-  return fetch(`${API_URL}/users/${id}`, {
-    method: "DELETE"
+  return fetch(`${API_URL}?id=${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-type": "application/json"
+    }
   });
+
 }
 //funções fetch

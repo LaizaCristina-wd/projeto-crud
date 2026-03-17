@@ -1,6 +1,5 @@
 
-import { loadUsers, handleCreate, handleDelete, handleUpdate, handleEdit} from "./js/users.js";
-
+import { loadUsers, handleCreate, handleDelete,handleEdit, handleUpdate } from "./js/users.js";
 
 function init() {
   setupEventListeners();

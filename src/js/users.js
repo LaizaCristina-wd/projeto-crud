@@ -11,11 +11,11 @@ export async function loadUsers(){
  data.users.forEach(user=>{
    addUserCard(user);
  });
-
 } 
-//lógica de criar usuário
- export async function handleCreate(){
 
+//lógica de criar usuário
+ export async function handleCreate(event){
+  event.preventDefault();
  const name = document.getElementById("name").value;
  const age = document.getElementById("age").value;
  const email = document.getElementById("email").value;
@@ -27,22 +27,26 @@ export async function loadUsers(){
  };
 
  const createdUser = await createUser(newUser);
-  console.log(createdUser);
-
  addUserCard(createdUser);
-
 }
 
 //deletar usuário
 
 export async function handleDelete(event){
+ const button = event.target.closest(".delete-btn")
+ const id = button.dataset.id;
 
- const id = event.target.dataset.id;
-
+ console.log("id enviado:", id)
  await deleteUser(id);
 
- event.target.closest(".delete-btn").remove();
-
+ 
+ const card = button.closest(".user-card")
+ if(card){
+  card.remove();
+ }
+ else{
+  console.error("Erro ao deletar usuário");
+ }
 }
 //botão de edit do card
 export function handleEdit(event){
@@ -50,9 +54,10 @@ export function handleEdit(event){
  const card = event.target.closest(".card-body");
 
  const user = {
+   id: event.target.dataset.id,
    name: card.querySelector("h3").textContent,
-   age: card.querySelector("p:nth-child(2)").textContent,
-   email: card.querySelector("p:nth-child(3)").textContent
+   age: card.querySelector("p:nth-child(2)").textContent.replace("Age: ",""),
+   email: card.querySelector("p:nth-child(3)").textContent.replace("Email: ", "")
  };
 
  showEditForm(user);
@@ -79,7 +84,5 @@ export async function handleUpdate(event){
    hideEditForm();
     form.reset();
     await loadUsers();
-  console.log("Atualizar usuário:", updatedUser);
-
 }
 //lógica da aplicação

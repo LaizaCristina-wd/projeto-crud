@@ -5,6 +5,7 @@ export function showEditForm(user){
   form.querySelector("#edit-age").value = user.age;
   form.querySelector("#edit-email").value = user.email;
 
+  document.querySelector("#edit-form").dataset.id = user.id;
   form.style.display = "block";
 }
 
