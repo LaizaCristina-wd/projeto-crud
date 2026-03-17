@@ -41,7 +41,7 @@ export async function handleDelete(event){
 
  await deleteUser(id);
 
- event.target.closest(".card").remove();
+ event.target.closest(".delete-btn").remove();
 
 }
 //botão de edit do card
@@ -63,6 +63,7 @@ export async function handleUpdate(event){
   event.preventDefault();
   const form = document.getElementById("edit-form");
   const id = form.dataset.id;
+  console.log("ID:", id);
 
   const name = document.getElementById("edit-name").value;
   const age = document.getElementById("edit-age").value;
