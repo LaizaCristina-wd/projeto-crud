@@ -85,4 +85,11 @@ export async function handleUpdate(event){
     form.reset();
     await loadUsers();
 }
+/*document.addEventListener("click", function(event) {
+  const button = event.target.closest(".delete-btn");
+
+  if (button) {
+    handleDelete(event);
+  }
+});*/
 //lógica da aplicação

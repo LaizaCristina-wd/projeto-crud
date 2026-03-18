@@ -1,4 +1,4 @@
-import { API_URL } from "./config.js";
+const API_URL = "http://localhost:8000/api";
 
  export async function getUsers(){
   try {
@@ -24,14 +24,14 @@ export async function createUser(data){
   return response.json();
 }
 export async function updateUser(id, data){
-  return fetch(`${API_URL}/users/${id}`, {
+  return fetch(`${API_URL}/users/${id}/users`, {
     method: "PUT",
     headers: { "Content-Type":"application/json" },
     body: JSON.stringify(data)
   });
 }
 export async function deleteUser(id){
-  return fetch(`${API_URL}?id=${id}`, {
+  return fetch(`${API_URL}?id=${id}/users`, {
     method: "DELETE",
     headers: {
       "Content-type": "application/json"
