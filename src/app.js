@@ -7,7 +7,7 @@ function init() {
 }
 
 
-//event do botão criar usuario
+//events
 function setupEventListeners(){
 
   const createForm = document.getElementById("userForm");
@@ -19,8 +19,10 @@ function setupEventListeners(){
    const usersContainer = document.getElementById("usersList");
    usersContainer.addEventListener("click", (event) => {
 
-   if(event.target.classList.contains("delete-btn")){
-      handleDelete(event);
+   const deleteButton = event.target.closest(".delete-btn");
+
+   if(deleteButton){
+    handleDelete(event);
     }
     else if(event.target.classList.contains("edit-btn")){
     handleEdit(event);
