@@ -1,21 +1,6 @@
-import { getUsers, updateUser, updateParseUser } from "./api.js";
-import { addUserCard } from "./create.js";
+import { updateUser, updateParseUser } from "./api.js";
 import { hideEditForm, showEditForm } from "./formUI.js";
-
-
-export async function loadUsers(){
-  try {
-    const containerUser = document.getElementById("usersList");
- containerUser.innerHTML = "";
- const data = await getUsers();
- data.users.forEach((user,index)=>{
-   addUserCard(user, index);
- });
- } catch(error){
-  console.error("erro ao carregar usuários", error);
- }
-}
-
+import { loadUsers } from "../app.js";
 //botão de edit do card
 export function handleEdit(event){
 
@@ -45,11 +30,11 @@ export async function handleUpdate(event){
     age,
     email
   };
-   await updateUser(id, updatedUser);
+   await updateUser(updatedUser);
    await updateParseUser(id);
    hideEditForm();
     form.reset();
-    await loadUsers();
+    await loadUsers()
 }
 
 //lógica da aplicação

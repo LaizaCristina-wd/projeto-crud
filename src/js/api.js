@@ -21,34 +21,32 @@ export async function createUser(data){
   return response.json();
 }
 
-export async function updateParseUser(id, data){
-  const response = await fetch("http://localhost:8000/api/users?index=0", {
+export async function updateParseUser(data){
+  const response = await fetch(`http://localhost:8000/api/users?id=${id}`, {
     method: "PATCH",
     headers: { "Content-Type":"application/json"
     },
-    body: JSON.stringify(id, data)
+    body: JSON.stringify(data)
   });
     response.json();
 }
-export async function updateUser(id, data){
-  const response = await fetch("http://localhost:8000/api/users?index=0", {
+export async function updateUser(data){
+  const response = await fetch(`http://localhost:8000/api/users?id=${id}`, {
     method: "PUT",
     headers: { "Content-Type":"application/json"
     },
-    body: JSON.stringify(id, data),
+    body: JSON.stringify(data),
   });
     response.json();
 }
 
 export async function deleteUser(id){
-    console.log("ID enviado:", id);
+  console.log("ID enviado:", id);
 
-    const response = await fetch("http://localhost:8000/api/users?index=0",{
-      method: "DELETE",
-    });
-
-    const data = await response.json();
-    console.log("Deletado:", data);
+  const response = await fetch(`http://localhost:8000/api/users?id=${id}`, {
+    method: "DELETE",
+  
+  });
+   await response.json();
 }
-  return response.json();
 //funções fetch

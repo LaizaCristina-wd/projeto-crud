@@ -1,24 +1,21 @@
-import { deleteUser } from "./api.js";
-import { loadUsers } from "./users.js";
+import { deleteUser} from "./api.js";
 //deletar usuário
 
 export async function handleDelete(event){
+  const button = event.target.closest(".delete-btn");
+  const id = button.dataset.id;
 
- const button = event.target.closest(".delete-btn");
+  console.log("id capturado:", id);
 
- const id = Number(button?.dataset.id);
+  try {
+    await deleteUser(id); 
 
-console.log("dataset.id:", button?.dataset.id);
- console.log("id capturado", id);
+    const card = button.closest(".user-card");
+    if(card){
+      card.remove();
+    }
 
-
- button.closest(".col-md-4")?.remove();
- try {
-    await deleteUser(index);
-    await loadUsers();
-
-  } catch (error) {
+  } catch(error){
     console.error("Erro ao deletar:", error);
   }
- 
 }
