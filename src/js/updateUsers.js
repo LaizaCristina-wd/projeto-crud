@@ -1,4 +1,4 @@
-import { updateUser, updateParseUser } from "./api.js";
+import { updateUser} from "./api.js";
 import { hideEditForm, showEditForm } from "./formUI.js";
 import { loadUsers } from "../app.js";
 //botão de edit do card
@@ -27,11 +27,10 @@ export async function handleUpdate(event){
   const email = document.getElementById("edit-email").value;
   const updatedUser = {
     name,
-    age,
+    age: Number(age),
     email
   };
-   await updateUser(updatedUser);
-   await updateParseUser(id);
+   await updateUser(updatedUser, id);
    hideEditForm();
     form.reset();
     await loadUsers()
