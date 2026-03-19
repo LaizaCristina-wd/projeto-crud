@@ -1,51 +1,21 @@
-import { getUsers, createUser, deleteUser, updateUser, updateParseUser } from "./api.js";
-import { addUserCard } from "./usersUI.js";
+import { getUsers, updateUser, updateParseUser } from "./api.js";
+import { addUserCard } from "./create.js";
 import { hideEditForm, showEditForm } from "./formUI.js";
 
+
 export async function loadUsers(){
- const containerUser = document.getElementById("usersList");
+  try {
+    const containerUser = document.getElementById("usersList");
  containerUser.innerHTML = "";
  const data = await getUsers();
- data.users.forEach(user=>{
-   addUserCard(user);
+ data.users.forEach((user,index)=>{
+   addUserCard(user, index);
  });
-} 
-
-//lógica de criar usuário
- export async function handleCreate(event){
-  event.preventDefault();
- const name = document.getElementById("name").value;
- const age = document.getElementById("age").value;
- const email = document.getElementById("email").value;
-
- const newUser = {
-   name,
-   age,
-   email
- };
- const createdUser = await createUser(newUser);
- addUserCard(createdUser);
-}
-
-//deletar usuário
-
-export async function handleDelete(event){
-
- const button = event.target.closest(".delete-btn");
-  console.log("BOTÃO:", button);
- const id = Number(button?.dataset.id);
-
-console.log("dataset.id:", button?.dataset.id);
- console.log("id capturado", id);
-  if(isNaN(id)) {
-    console.error("Id inválido");
-  return;
+ } catch(error){
+  console.error("erro ao carregar usuários", error);
  }
-
- await deleteUser(id);
- button.closest(".col-md-4")?.remove();
- 
 }
+
 //botão de edit do card
 export function handleEdit(event){
 

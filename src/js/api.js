@@ -7,6 +7,7 @@
   }  
   catch(error){
     console.error("User not found", error);
+     return { users: [] }; 
   }
 }
 
@@ -39,23 +40,15 @@ export async function updateUser(id, data){
     response.json();
 }
 
-export async function deleteUser(id) {
-  try {
+export async function deleteUser(id){
     console.log("ID enviado:", id);
 
-    const response = await fetch("http://localhost:8000/api/users?index=0", {
+    const response = await fetch("http://localhost:8000/api/users?index=0",{
       method: "DELETE",
     });
 
-    if (!response.ok) {
-      throw new Error(`Erro HTTP: ${response.status}`);
-    }
-
     const data = await response.json();
     console.log("Deletado:", data);
-
-  } catch (error) {
-    console.error("Erro ao deletar:", error);
-  }
 }
+  return response.json();
 //funções fetch

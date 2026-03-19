@@ -1,11 +1,11 @@
 
-import { loadUsers, handleCreate, handleDelete,handleEdit, handleUpdate } from "./js/users.js";
-
+import { loadUsers, handleEdit, handleUpdate } from "./js/users.js";
+import { handleCreate } from "./js/create.js";
+import { handleDelete } from "./js/delete.js";  
 function init() {
   setupEventListeners();
   loadUsers();
 }
-
 
 //events
 function setupEventListeners(){
@@ -17,12 +17,13 @@ function setupEventListeners(){
   editForm.addEventListener("submit", handleUpdate);
 
    const usersContainer = document.getElementById("usersList");
-   usersContainer.addEventListener("click", (event) => {
+   usersContainer.addEventListener("click", async (event) => {
 
    const deleteButton = event.target.closest(".delete-btn");
 
    if(deleteButton){
-    handleDelete(event);
+    await handleDelete(event);
+    await loadUsers();
     }
     else if(event.target.classList.contains("edit-btn")){
     handleEdit(event);
