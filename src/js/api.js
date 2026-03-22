@@ -1,9 +1,8 @@
-  const urlApi = "http://localhost:8000/api/users"
+  const API_URL = "http://localhost:8000/api/users";
   export async function getUsers(){
     try {
-      const response = await fetch(`${urlApi}`);
+      const response = await fetch(`${API_URL}`);
       const data = await response.json();
-      console.log(data);
       return data;
     }  
     catch(error){
@@ -13,7 +12,7 @@
   }
 
   export async function createUser(data){
-    const response = await fetch("http://localhost:8000/api/users",
+    const response = await fetch(`${API_URL}`,
      {
       method: "POST",
       headers: { "Content-Type":"application/json"
@@ -23,11 +22,11 @@
     return response.json();
   }
 
-  export async function updateParseUser(fields){
+  export async function updateParseUser(id,fields){
     if (fields.age !== undefined){
       fields.age = Number(fields.age);
     }
-    const response = await fetch(`${urlApi}?id=${id}`, {
+    const response = await fetch(`${API_URL}?id=${id}`, {
       method: "PATCH",
       headers: { "Content-Type":"application/json"
       },
@@ -39,16 +38,15 @@
           data.error || "Failed to patch user"
         )
       }
-      return data; 
+      return data;
   }
 
-  export async function updateUser(urlApi, id ,{name, age, email}){
-    const response = await fetch(`${urlApi}?id=${id}`, {
+  export async function updateUser(id, user){
+    const response = await fetch(`${API_URL}?id=${id}`, {
       method: "PUT",
       headers: { "Content-Type":"application/json"
       },
-      body: JSON.stringify({
-         name, age: Number(age), email}),
+      body: JSON.stringify(user),
     });
       const data = await response.json();
       if (!response.ok){
@@ -62,7 +60,7 @@
   export async function deleteUser(id){
     console.log("ID enviado:", id);
 
-    const response = await fetch(`${urlApi}?id=${id}`, {
+    const response = await fetch(`${API_URL}?id=${id}`, {
       method: "DELETE",
     
     });

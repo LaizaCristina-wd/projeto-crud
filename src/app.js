@@ -1,8 +1,10 @@
-  console.log("APP RODANDO");
   import { getUsers } from "./js/api.js";
-  import { handleEdit, handleUpdate } from "./js/updateUsers.js";
+  import { hideEditForm } from "./js/formUI.js";
+  import { handleEdit, handleUpdate, cleanEditForm } from "./js/updateUsers.js";
   import { handleCreate, addUserCard } from "./js/create.js";
   import { handleDelete } from "./js/delete.js";  
+
+  
   function init() {
     setupEventListeners();
     loadUsers();
@@ -26,27 +28,33 @@
 
     const createForm = document.getElementById("userForm");
     createForm.addEventListener("submit", handleCreate);
-
-    const editForm = document.getElementById("edit-form");
-    editForm.addEventListener("submit", handleUpdate);
     
     const usersContainer = document.getElementById("usersList");
-    usersContainer.addEventListener("click", async (event) => {
-      const deleteButton = event.target.closest(".delete-btn");
-      
-      const confirmacao = confirm("Deletar usuario?");
-      if(!confirmacao){
-        event.preventDefault();
-      }
-      if(deleteButton){
-      await handleDelete(event);
-      await loadUsers();
-      }
-      else if(event.target.classList.contains("edit-btn")){
-      handleEdit(event);
-      }
-    });
-  };
 
+    usersContainer.addEventListener("click", (event) => {
+    handleDelete(event);
+    handleEdit(event);
+    });
+
+    const editForm = document.getElementById("edit-form");
+
+    editForm.addEventListener("submit", async (event)=>{
+
+      event.preventDefault();
+
+      await handleUpdate();
+
+    });
+    const btnCancel = document.getElementById("btnCancel");
+
+    btnCancel.addEventListener("click", ()=>{
+
+      hideEditForm();
+
+      cleanEditForm();
+
+    });
+ 
+    };
 
   document.addEventListener("DOMContentLoaded", init);

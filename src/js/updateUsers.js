@@ -1,39 +1,56 @@
-import { updateUser} from "./api.js";
+import { updateParseUser, updateUser} from "./api.js";
 import { hideEditForm, showEditForm } from "./formUI.js";
 import { loadUsers } from "../app.js";
 //botão de edit do card
+let editUserId = null;
 export function handleEdit(event){
 
- const card = event.target.closest(".card-body");
+  const editButton = event.target.closest(".edit-btn");
+
+ if(!editButton) return;
+
+ editUserId = editButton.dataset.id;
+
+ console.log("usuario sendo editado:", editUserId);
+
+ const card = editButton.closest(".user-card");
 
  const user = {
-   id: event.target.dataset.id,
-   name: card.querySelector("h3").textContent,
-   age: card.querySelector("p:nth-child(2)").textContent.replace("Age: ",""),
-   email: card.querySelector("p:nth-child(3)").textContent.replace("Email: ", "")
+
+  name: card.querySelector(".user-name").textContent,
+  age: card.querySelector(".user-age").textContent,
+  email: card.querySelector(".user-email").textContent
+
  };
 
  showEditForm(user);
 
 }
-export async function handleUpdate(event){
-  event.preventDefault();
-  const form = document.getElementById("edit-form");
-  const id = form.dataset.id;
-  console.log("ID:", id);
+//update e cancel esconder o form
+export async function handleUpdate(){
+const user = {
+  name: document.getElementById("edit-name").value || undefined,
+  age: document.getElementById("edit-age").value || undefined,
+  email: document.getElementById("edit-email").value || undefined
+};
+const allInput = Object.values(user).every(valor=>valor !== undefined);
+if(allInput){
+  await updateUser(editUserId, user);
 
-  const name = document.getElementById("edit-name").value;
-  const age = document.getElementById("edit-age").value;
-  const email = document.getElementById("edit-email").value;
-  const updatedUser = {
-    name,
-    age: Number(age),
-    email
-  };
-   await updateUser(updatedUser, id);
-   hideEditForm();
-    form.reset();
-    await loadUsers()
+} else{
+await updateParseUser(editUserId, user);
+}
+hideEditForm();
+cleanEditForm();
+await loadUsers();
 }
 
-//lógica da aplicação
+export function cleanEditForm(){
+
+ document.getElementById("edit-name").value = "";
+ document.getElementById("edit-age").value = "";
+ document.getElementById("edit-email").value = "";
+
+ editUserId = null;
+
+}

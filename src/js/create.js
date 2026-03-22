@@ -1,6 +1,6 @@
 import { createUser} from "./api.js";
 
-//lógica de criar usuário
+//criar usuário
 
  export async function handleCreate(event){
   event.preventDefault();
@@ -16,7 +16,7 @@ import { createUser} from "./api.js";
     console.error("Erro ao criar usuário", error);
   }
 }
-//parte de UI
+//parte visual
 export function addUserCard(user) {
   const container = document.getElementById("usersList");
   const template = document.getElementById("user-template");
@@ -25,11 +25,9 @@ export function addUserCard(user) {
 
   clone.style.display = "block";
   clone.removeAttribute("id");
-
-  
-  clone.querySelector(".user-name").textContent = user.name;
-  clone.querySelector(".user-age").textContent = `Age: ${user.age}`;
-  clone.querySelector(".user-email").textContent = `Email: ${user.email}`;
+  clone.querySelector(".user-name").textContent = `${user.name}`;
+  clone.querySelector(".user-age").textContent = `${user.age}`;
+  clone.querySelector(".user-email").textContent = `${user.email}`;
 
 
   clone.querySelector(".edit-btn").dataset.id = user.id;

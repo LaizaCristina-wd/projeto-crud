@@ -11,4 +11,4 @@ export function showEditForm(user){
 
 export function hideEditForm(){
   document.querySelector("#edit-user-card").style.display = "none";
-} //esconder o formulário de edição
+} //parte visual do form que preenche os campos após clicar em edit
